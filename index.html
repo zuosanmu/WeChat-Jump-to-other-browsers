@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+	<style type="text/css">
+		* {
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		img,
+		button {
+			display: block;
+		}
+		
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		
+		#show {
+			width: 100%;
+			height: 100%;
+		}
+		#shade{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url("open.png");
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-color: rgba(0, 0, 0, 0.7);
+		}
+		#hide {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.mrigin-auto {
+			margin: 20% auto 0;
+		}
+		#btn,#btn_weixin{
+			width: 30%;
+			height: 40px;
+			font-weight: bold;
+			outline: none;
+		}
+		.text-center{
+			text-align: center;
+			margin: 10% 0;
+		}
+	</style>
+	<div id="show">
+		<div id="shade" style="display:none"></div>
+		<!--<img class="mrigin-auto" id="img_weixin" src="" alt="">-->
+		<button class="mrigin-auto" id="btn_weixin">点击下载</button>
+	</div>
+	<div id="hide" style="display:block">
+		<!--<img class="mrigin-auto" id="img" src="" alt="">-->
+		<button class="mrigin-auto" id="btn">点击下载</button>
+	</div>
+</body>
+<script type="text/javascript">
+	window.onload = function () {
+		var ua = window.navigator.userAgent.toLowerCase();
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+			document.getElementById("img_weixin").src = 'LotteryUser_android.png';
+			document.getElementById("btn_weixin").addEventListener('click', function () {
+				document.getElementById("shade").style.display = "block";
+				document.getElementById("btn").removeEventListener('click');
+			})
+			document.getElementById("hide").style.display = "none";
+		}
+		if (isAndroid) {
+			//android终端
+			document.getElementById("img").src = 'LotteryUser_android.png';
+			document.getElementById("btn").addEventListener('click', function () {
+				window.location.href = 'https://139.224.195.129:7788/apk/lotteryStation_v1.0.0_rqg_release.apk';
+				document.getElementById("btn").removeEventListener('click');
+			})
+
+		} else {
+			//ios终端
+			document.getElementById("img").src = 'LotteryUser_ios.png';
+			document.getElementById("btn").addEventListener('click', function () {
+				window.location.href = 'itms-services:///?action=download-manifest&url=https://www.rongqiangu.com:7788/ipa/LotteryUser.plist';
+				document.getElementById("btn").removeEventListener('click');
+			})
+		}
+	}
+
+</script>
+<html>
