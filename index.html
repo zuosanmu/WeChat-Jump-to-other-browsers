@@ -32,7 +32,8 @@
 			width: 100%;
 			height: 100%;
 		}
-		#shade{
+		
+		#shade {
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -43,6 +44,7 @@
 			background-size: contain;
 			background-color: rgba(0, 0, 0, 0.7);
 		}
+		
 		#hide {
 			width: 100%;
 			height: 100%;
@@ -51,23 +53,52 @@
 		.mrigin-auto {
 			margin: 20% auto 0;
 		}
-		#btn,#btn_weixin{
+		
+		#btn,
+		#btn_weixin {
 			width: 30%;
 			height: 40px;
 			font-weight: bold;
 			outline: none;
 		}
-		.text-center{
+		
+		.text-center {
 			text-align: center;
 			margin: 10% 0;
 		}
+		
+		.intro {
+			display: block;
+			width: 50%;
+			margin: 10px auto !important;
+		}
+		
+		#intro {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			overflow: scroll;
+			display: none;
+			background: rgba(0, 0, 0, 0.6);
+		}
 	</style>
-	<div id="show">
+	<div id="show" style="display:none">
 		<div id="shade" style="display:none"></div>
 		<img class="mrigin-auto" id="img_weixin" src="" alt="">
 		<button class="mrigin-auto" id="btn_weixin">点击下载</button>
 	</div>
 	<div id="hide" style="display:block">
+		<div id="intro">
+			<img class="intro" src="1.jpg" alt="">
+			<img class="intro" src="2.jpg" alt="">
+			<img class="intro" src="3.jpg" alt="">
+			<img class="intro" src="4.jpg" alt="">
+			<img class="intro" src="5.jpg" alt="">
+			<img class="intro" src="6.jpg" alt="">
+			<img class="intro" src="7.jpg" alt="">
+		</div>
 		<img class="mrigin-auto" id="img" src="" alt="">
 		<button class="mrigin-auto" id="btn">点击下载</button>
 	</div>
@@ -78,29 +109,33 @@
 		var u = navigator.userAgent;
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
 		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-			document.getElementById("img_weixin").src = 'LotteryUser_android.png';
+		if (ua.match(/MicroMessenger/i) == 'micromessenger' || u.match(/QQ\//i) == "QQ/"/*u.indexOf('MQQBrowser') !== -1 || u.indexOf('MQQBrowser QQ') !== -1*/) {
+			document.getElementById("show").style.display = "block";
+			document.getElementById("hide").style.display = "none";
+			document.getElementById("img_weixin").src = 'LotterySite_android.png';
 			document.getElementById("btn_weixin").addEventListener('click', function () {
 				document.getElementById("shade").style.display = "block";
-				document.getElementById("btn").removeEventListener('click');
-			})
-			document.getElementById("hide").style.display = "none";
+				document.getElementById("btn_weixin").removeEventListener('click');
+			});
+
 		}
 		if (isAndroid) {
-			//android终端
-			document.getElementById("img").src = 'LotteryUser_android.png';
+			document.getElementById("img").src = 'LotterySite_android.png';
 			document.getElementById("btn").addEventListener('click', function () {
-				window.location.href = 'https://139.224.195.129:7788/apk/lotteryStation_v1.0.0_rqg_release.apk';
+				window.location.href = 'https://139.224.195.129:7788/apk/LotterySite.apk';
 				document.getElementById("btn").removeEventListener('click');
-			})
-
+			});
 		} else {
-			//ios终端
-			document.getElementById("img").src = 'LotteryUser_ios.png';
-			document.getElementById("btn").addEventListener('click', function () {
-				window.location.href = 'itms-services:///?action=download-manifest&url=https://www.rongqiangu.com:7788/ipa/LotteryUser.plist';
-				document.getElementById("btn").removeEventListener('click');
+			document.getElementById("img").src = 'LotterySite_ios.png';
+			document.getElementById("intro").style.display = 'block';
+			document.getElementById("intro").addEventListener('click', function () {
+				document.getElementById("intro").style.display = 'none';
+				document.getElementById("intro").removeEventListener('click');
 			})
+			document.getElementById("btn").addEventListener('click', function () {
+				window.location.href = 'itms-services:///?action=download-manifest&url=https://www.rongqiangu.com:7788/ipa/LotterySite.plist';
+				document.getElementById("btn").removeEventListener('click');
+			});
 		}
 	}
 
